@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算器</title>
+<style>
+    body {
+        color:#66ccff;
+        text-align:center;
+        background-color:black;
+    }
+    #calculator {
+        width:200px;
+        overflow:hidden;
+        margin:10px auto;
+        padding-bottom:10px;
+        background-color:#f2f2f2;
+    }
+    #calculator ul{
+        padding:0;
+        margin:5px 14px;
+        overflow:hidden
+    }
+    #calculator li{
+        list-style:none;
+        float:left;
+        width:32px;
+        height:32px;
+        margin:5px;
+        display:inline;
+        line-height:32px;
+        font-size:14px;
+        background-color:white;
+    }
+    #calculator li:hover{
+        background-color:yellow;
+        cursor:pointer;
+    }
+    #calculator li:active{
+        background-color:#ffcc99;
+        cursor:pointer;
+    }
+    #calculator li.tool{
+           background-color:white;
+       }
+    #calculator li.tool:hover{
+        background-color:yellow;
+        cursor:pointer;
+    }
+    #calculator li.tool:active{
+        background-color:#ffcc99;
+        cursor:pointer;
+    }
+    .screen{
+        width:160px;
+        height:24px;
+        line-height:24px;
+        padding:4px;
+        border:#e6e6e6 1px solid;
+        margin:10px auto;
+        direction:ltr;
+        text-align:right;
+        font-size:16px;
+        color:#66ccff;
+    }
+</style>
+<script>
+    var num=0,result=0,numshow="0", operate=0, calcul=0, quit=0;
+    function command(num){
+        var str=String(document.calculator.numScreen.value);
+        str=(str!="0") ? ((operate==0) ? str : "") : "";
+        str=str + String(num);
+        document.calculator.numScreen.value=str;
+        operate=0;
+        quit=0;
+    }
+    function plus(){
+        calculate();
+        operate=1;
+        calcul=1;
+    }
+    function minus(){
+        calculate();
+        operate=1;
+        calcul=2;
+    }
+    function times(){
+        calculate();
+        operate=1;
+        calcul=3;
+    }
+    function divide(){
+        calculate();
+        operate=1;
+        calcul=4;
+    }
+    function equal(){
+        calculate();
+        operate=1;
+        num=0;
+        result=0;
+        numshow="0";
+    }
+    //
+    function calculate(){
+        numshow=Number(document.calculator.numScreen.value);
+        if(num!=0 && quit!=1){
+            switch(calcul){
+                case 1:result=num+numshow;break;
+                case 2:result=num-numshow;break;
+                case 3:result=num*numshow;break;
+                case 4:if(numshow!=0){result=num/numshow;}else{result=0} break;
+            }
+            quit=1;
+        }
+        else{
+            result=numshow;
+        }
+        numshow=String(result);
+        document.calculator.numScreen.value=numshow;
+        num=result;
+    }
+    function clearnote(){
+        document.getElementById("note").innerHTML="";
+    }
+</script>
+</head>
+<body>
+<p>PS：JS部分看不太懂，几乎是照着敲得</p>
+<div id="calculator">
+    <form name="calculator" action="" method="get">
+        <div id="calcu-screen">
+            <input type="text" name="numScreen" class="screen" value="0" onfocus="this.blur();" />
+        </div>
+        <div id="calcu-btn">
+            <ul> <!--配置按钮-->
+                <li onclick="command(7)">7</li>
+                <li onclick="command(8)">8</li>
+                <li onclick="command(9)">9</li>
+                <li class="tool" onclick="times()">×</li>
+                <li onclick="command(4)">4</li>
+                <li onclick="command(5)">5</li>
+                <li onclick="command(6)">6</li>
+                <li class="tool" onclick="divide()">÷</li>
+                <li onclick="command(1)">1</li>
+                <li onclick="command(2)">2</li>
+                <li onclick="command(3)">3</li>
+                <li class="tool" onclick="plus()">+</li>
+                <li onclick="command(0)">0</li>
+                <li> </li>
+                <li class="tool" onclick="equal()">=</li>
+                <li class="tool" onclick="minus()">-</li>
+                </ul>
+        </div>
+    </form>
+</div>
+</body>
+</html>
